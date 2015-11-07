@@ -1,0 +1,364 @@
+<extend name="Public/base" />
+
+
+
+<block name="body">
+    <script type="text/javascript" src="__STATIC__/uploadify/jquery.uploadify.min.js"></script>
+    <div class="main-title cf">
+        <h2>
+            {:isset($info['id'])?'编辑':'添加'}商品
+        </h2>
+    </div>
+    <!-- 标签页导航 -->
+<div class="tab-wrap">
+    <div class="tab-content">
+    <!-- 表单 -->
+    <form id="form" action="" method="post" class="form-horizontal">
+        <!-- 基础文档模型 --> 
+        <ul class="tab-nav nav">
+            <span class="current"><a >基本信息</a></span>
+            <span><a >商品属性</a></span> 
+            <span><a >详细描述</a></span>       
+        </ul>
+        <div class="form_pos">       
+            <div class="form_tab">
+                <div class="form-item">
+                    <label class="item-label">商品名称</label>
+                    <div class="controls">
+                        <input type="text" class="text input-large" name="goods_name" value="{$info.goods_name|default=''}">
+                    </div>
+                </div>
+                <div class="form-item">
+                    <label class="item-label">商品货号(No)<span class="check-tips">（用于分别商品）</span></label>
+                    <div class="controls">
+                        <input type="text" class="text input-large" name="good_no" value="{$info.good_no|default=''}">
+                    </div>
+                </div>
+                <div class="form-item">
+                    <label class="item-label">商品分类{$info.cat_id}<span class="check-tips">（用于后台显示的配置标题）</span></label>
+                    <div class="controls">
+                       <select name="cat_id">
+                            <volist name="Menus" id="menu">
+                                <option value="{$menu.id}" <if condition="$info[cat_id] eq $menu[id]">selected</if>>{$menu.title_show}</option>
+                            </volist>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-item">
+                    <label class="item-label">商品品牌<span class="check-tips">（用于后台显示的配置标题）</span></label>
+                    <div class="controls">
+                        <select name="brand_id">
+                            <volist name="Menus" id="menu">
+                                <option value="{$menu.brand_id}">{$menu.brand_name}</option>
+                            </volist>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-item">
+                    <label class="item-label">商品价格<span class="check-tips">（用于后台显示的配置标题）</span></label>
+                    <div class="controls">
+                        <input type="text" class="text input-large" name="shop_price" value="{$info.shop_price|default=''}">
+                    </div>
+                </div>
+                <div class="form-item">
+                    <label class="item-label">商品市场价<span class="check-tips">（用于后台显示的配置标题）</span></label>
+                    <div class="controls">
+                        <input type="text" class="text input-large" name="market_price" value="{$info.market_price|default=''}">
+                    </div>
+                </div>
+                <div class="form-item">
+                    <label class="item-label">商品库存<span class="check-tips"></span></label>
+                    <div class="controls">
+                        <input type="text" class="text input-large" name="goods_num" value="{$info.goods_num|default=''}">
+                    </div>
+                </div>
+                <div class="form-item">
+                    <label class="item-label">是否上架<span class="check-tips"></span></label>
+                    <div class="controls">
+                        <label class="radio"><input type="radio" name="is_on_sale" value="1" checked="checked">是</label>
+                        <label class="radio"><input type="radio" name="is_on_sale" value="0">否</label>
+                    </div>
+                </div>
+                <div class="form-item">
+                    <label class="item-label">缩略图</label>
+                    <div class="controls">
+                        <input type="file" id="upload_picture_thumb">
+                        <input type="hidden" name="thumb" id="cover_id_thumb" value="{$info['thumb']}"/>
+                        <div class="upload-img-box">
+                        <notempty name="info['thumb']">
+                            <div class="upload-pre-item"><img src=".{$info['thumb']}"/></div>
+                        </notempty>
+                        </div>
+                    </div>
+                   
+                </div>
+                    <!--缩略图结束-->
+                <div class="form-item">
+                    <label class="item-label">商品相册</label>
+                    <div class="controls">
+                        <input type="file" id="upload_picture_picurl">
+                        <div id="picurl">
+
+                        </div>
+                        <div class="upload-img-box">
+                        <notempty name="info['picurl']">
+                            <volist name="info['picurl']" id='picurl' >
+                                <div class="upload-pre-item"><img src="{$picurl|get_cover='path'}"/></div>
+                            </volist>
+                        </notempty>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="form_tab">            
+                <div class="form-item">
+                    <label class="item-label">推荐<span class="check-tips"></span></label>
+                    <div class="controls">
+                        <label class="radio"><input type="checkbox" name="is_best" value="1">精品</label>
+                        <label class="radio"><input type="checkbox" name="is_new" value="1">新品</label>
+                        <label class="radio"><input type="checkbox" name="is_hot" value="1">热卖</label>
+                    </div>
+                </div>
+                <div class="form-item">
+                    <label class="item-label">商品类型</label>
+                    <div class="controls">
+                        <select name="type" id="type">
+                            <volist name="Product" id="pro">
+                                <option value="{$pro.id}" <if condition="$pro[id] eq $info[type]">selected</if>>{$pro.name}</option>
+                            </volist>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-item">
+                    <label class="item-label">商品属性<span class="check-tips">（用于分别商品）</span></label>
+                    <div class="controls">
+                        <table class="attr_table" id="attr_table">
+                            
+                            <tr><td colspan="10" style="text-align:left;"><span id="addattr">新增</span></td></tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="form_tab">            
+                <div class="form-item">
+                    <label class="item-label">商品描述<span class="check-tips"></span></label>
+                    <div class="controls">
+                       <input type="text" class="text input-large" name="description" value="{$info.description|default=''}">
+                    </div>
+                </div>
+                <div class="form-item">
+                    <label class="item-label">详细描述<span class="check-tips"></span></label>
+                    <div class="controls">
+                        <label class="textarea">
+                            <textarea name="content">{$info.content}</textarea>
+                            </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-item cf">
+            <button class="btn submit-btn ajax-post hidden" id="submit" type="submit" target-form="form-horizontal">确 定</button>
+            <a class="btn btn-return" href="{:U('article/index?cate_id='.$cate_id)}">返 回</a>
+            
+            <input type="hidden" name="id" value="{$info.id|default=''}"/>
+            <input type="hidden" name="pid" value="{$info.pid|default=''}"/>
+            <input type="hidden" name="model_id" value="{$info.model_id|default=''}"/>
+            <input type="hidden" name="group_id" value="{$info.group_id|default=''}"/>
+            <input type="hidden" name="category_id" value="{$info.category_id|default=''}">
+        </div>
+    </form>
+    </div>
+</div>
+</block>
+
+<block name="script">
+<link href="__STATIC__/datetimepicker/css/datetimepicker.css" rel="stylesheet" type="text/css">
+<php>if(C('COLOR_STYLE')=='blue_color') echo '<link href="__STATIC__/datetimepicker/css/datetimepicker_blue.css" rel="stylesheet" type="text/css">';</php>
+<link href="__STATIC__/datetimepicker/css/dropdown.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="__STATIC__/datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript" src="__STATIC__/datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+<script type="text/javascript">
+//上传图片
+/* 初始化上传插件 */
+$("#upload_picture_thumb").uploadify({
+    "height"          : 30,
+    "swf"             : "__STATIC__/uploadify/uploadify.swf",
+    "fileObjName"     : "download",
+    "buttonText"      : "上传图片",
+    "uploader"        : "{:U('File/uploadPicture',array('session_id'=>session_id()))}",
+    "width"           : 120,
+    'removeTimeout'   : 1,
+    'fileTypeExts'    : '*.jpg; *.png; *.gif;*.jpeg;',
+    "onUploadSuccess" : uploadPicturethumb,
+    'onFallback' : function() {
+        alert('未检测到兼容版本的Flash.');
+    }
+});
+function uploadPicturethumb(file, data){
+    var data = $.parseJSON(data);
+    var src = '';
+    if(data.status){
+        $("#cover_id_thumb").val(data.path);
+        src = data.url || '__ROOT__' + data.path
+        $("#cover_id_thumb").parent().find('.upload-img-box').html(
+            '<div class="upload-pre-item"><img src="' + src + '"/></div>'
+        );
+    } else {
+        updateAlert(data.info);
+        setTimeout(function(){
+            $('#top-alert').find('button').click();
+            $(that).removeClass('disabled').prop('disabled',false);
+        },1500);
+    }
+}
+//上传多张图片
+$("#upload_picture_picurl").uploadify({
+    "height"          : 30,
+    "swf"             : "__STATIC__/uploadify/uploadify.swf",
+    "fileObjName"     : "download",
+    "buttonText"      : "上传图片",
+    "uploader"        : "{:U('File/uploadPicture',array('session_id'=>session_id()))}",
+    "width"           : 120,
+    'removeTimeout'   : 1,
+    'fileTypeExts'    : '*.jpg; *.png; *.gif;*.jpeg;',
+    "onUploadSuccess" : uploadPicturepicurl,
+    'onFallback' : function() {
+        alert('未检测到兼容版本的Flash.');
+    }
+});
+function uploadPicturepicurl(file, data){
+    var data = $.parseJSON(data);
+    var src = '';
+    if(data.status){
+        $("#picurl").append(
+            '<input type="hidden" name="picurl[]" value="'+data.id+'"/>'
+        );
+        src = data.url || '__ROOT__' + data.path
+        $("#picurl").parent().find('.upload-img-box').append(
+            '<div class="upload-pre-item"><img src="' + src + '"/></div>'
+        );
+    } else {
+        updateAlert(data.info);
+        setTimeout(function(){
+            $('#top-alert').find('button').click();
+            $(that).removeClass('disabled').prop('disabled',false);
+        },1500);
+    }
+}
+</script>
+<script type="text/javascript">
+
+//单选、复选框 是否选中
+Think.setValue("is_on_sale", {$info.is_on_sale|default = 1});
+Think.setValue("is_hot", {$info.is_hot|default = 0});
+Think.setValue("is_new", {$info.is_new|default = 0});
+Think.setValue("is_best", {$info.is_best|default = 0});
+
+//导航高亮
+highlight_subnav('{:U('index')}');
+
+$('#submit').click(function(){
+    $('#form').submit();
+});
+
+$(function(){
+
+    //加载属性
+    $('#type').change(function(){
+
+        $.post('{:U("Admin/Goods/getAttr")}',{type:$(this).val()},function(data){
+            if(data.status){
+                $('#attr_table').append(data.content.top);
+                $('#attr_table').append(data.content.content)
+                $contentTop = data.content.top;
+                $contentCont = data.content.content;
+            }else{
+            }
+        })
+    });
+
+    $('#addattr').click(function(){
+        $('#attr_table').append($contentCont);
+    });
+
+    $('#attr_table').on('click', '.del_attr', function(){
+          $(this).parent().parent().remove();
+    });
+
+    $('.date').datetimepicker({
+        format: 'yyyy-mm-dd',
+        language:"zh-CN",
+        minView:2,
+        autoclose:true
+    });
+    $('.time').datetimepicker({
+        format: 'yyyy-mm-dd hh:ii',
+        language:"zh-CN",
+        minView:2,
+        autoclose:true
+    });
+    showTab();
+    //选项卡
+    $(".nav span").click(function(){
+        $(this).addClass('current').siblings().removeClass('current');
+        $('.form_pos .form_tab').eq($(this).index()).show().siblings().hide();
+    });
+    <if condition="C('OPEN_DRAFTBOX') and (ACTION_NAME eq 'add' or $info['status'] eq 3)">
+    //保存草稿
+    var interval;
+    $('#autoSave').click(function(){
+        var target_form = $(this).attr('target-form');
+        var target = $(this).attr('url')
+        var form = $('.'+target_form);
+        var query = form.serialize();
+        var that = this;
+
+        $(that).addClass('disabled').attr('autocomplete','off').prop('disabled',true);
+        $.post(target,query).success(function(data){
+            if (data.status==1) {
+                updateAlert(data.info ,'alert-success');
+                $('input[name=id]').val(data.data.id);
+            }else{
+                updateAlert(data.info);
+            }
+            setTimeout(function(){
+                $('#top-alert').find('button').click();
+                $(that).removeClass('disabled').prop('disabled',false);
+            },1500);
+        })
+
+        //重新开始定时器
+        clearInterval(interval);
+        autoSaveDraft();
+        return false;
+    });
+
+    //Ctrl+S保存草稿
+    $('body').keydown(function(e){
+        if(e.ctrlKey && e.which == 83){
+            $('#autoSave').click();
+            return false;
+        }
+    });
+
+    //每隔一段时间保存草稿
+    function autoSaveDraft(){
+        interval = setInterval(function(){
+            //只有基础信息填写了，才会触发
+            var title = $('input[name=title]').val();
+            var name = $('input[name=name]').val();
+            var des = $('textarea[name=description]').val();
+            if(title != '' || name != '' || des != ''){
+                $('#autoSave').click();
+            }
+        }, 1000*parseInt({:C('DRAFT_AOTOSAVE_INTERVAL')}));
+    }
+    autoSaveDraft();
+
+    </if>
+
+});
+</script>
+</block>
