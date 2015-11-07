@@ -1,0 +1,144 @@
+[ 2015-11-07T13:13:43+08:00 ] 127.0.0.1 /mymall/Public/Admin/css/.css
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000021s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000449s ]
+ERR: 无法加载模块:Public
+
+[ 2015-11-07T13:13:44+08:00 ] 127.0.0.1 /mymall/Public/Admin/images/bg/bg.png
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000020s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000413s ]
+ERR: 无法加载模块:Public
+
+[ 2015-11-07T13:15:19+08:00 ] 127.0.0.1 /mymall/Public/Admin/css/.css
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000020s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000451s ]
+ERR: 无法加载模块:Public
+
+[ 2015-11-07T13:15:19+08:00 ] 127.0.0.1 /mymall/Public/Admin/images/bg/bg.png
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000030s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000540s ]
+ERR: 无法加载模块:Public
+
+[ 2015-11-07T13:15:19+08:00 ] 127.0.0.1 /mymall/Public/favicon.ico
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000016s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000326s ]
+ERR: 无法加载模块:Public
+
+[ 2015-11-07T13:15:48+08:00 ] 127.0.0.1 /mymall/Public/Admin/css/.css
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000024s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000513s ]
+ERR: 无法加载模块:Public
+
+[ 2015-11-07T13:16:35+08:00 ] 127.0.0.1 /mymall/Public/Admin/css/.css
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000036s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000711s ]
+ERR: 无法加载模块:Public
+
+[ 2015-11-07T13:16:45+08:00 ] 127.0.0.1 /mymall/Public/Admin/css/.css
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000021s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000403s ]
+ERR: 无法加载模块:Public
+
+[ 2015-11-07T13:16:59+08:00 ] 127.0.0.1 /mymall/Public/Admin/css/.css
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000021s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000359s ]
+ERR: 无法加载模块:Public
+
+[ 2015-11-07T13:19:16+08:00 ] 127.0.0.1 /mymall/Public/Admin/css/.css
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000019s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000388s ]
+ERR: 无法加载模块:Public
+
+[ 2015-11-07T13:19:17+08:00 ] 127.0.0.1 /mymall/Public/Admin/css/.css
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000025s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000453s ]
+ERR: 无法加载模块:Public
+
+[ 2015-11-07T13:19:18+08:00 ] 127.0.0.1 /mymall/Public/Admin/css/.css
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000030s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000539s ]
+ERR: 无法加载模块:Public
+
+[ 2015-11-07T13:19:18+08:00 ] 127.0.0.1 /mymall/Public/Admin/css/.css
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000051s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000721s ]
+ERR: 无法加载模块:Public
+
+[ 2015-11-07T13:19:18+08:00 ] 127.0.0.1 /mymall/Public/Admin/css/.css
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000097s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001436s ]
+ERR: 无法加载模块:Public
+
+[ 2015-11-07T13:19:18+08:00 ] 127.0.0.1 /mymall/Public/Admin/css/.css
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000023s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000371s ]
+ERR: 无法加载模块:Public
+
+[ 2015-11-07T13:23:21+08:00 ] 127.0.0.1 /mymall/Public/Admin/css/.css
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000018s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000374s ]
+ERR: 无法加载模块:Public
+
+[ 2015-11-07T13:23:21+08:00 ] 127.0.0.1 /mymall/Public/Admin/css/.css
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000055s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000826s ]
+ERR: 无法加载模块:Public
+
+[ 2015-11-07T15:15:03+08:00 ] 127.0.0.1 /mymall/Public/Admin/css/.css
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000023s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000417s ]
+ERR: 无法加载模块:Public
+
+[ 2015-11-07T15:15:49+08:00 ] 127.0.0.1 /mymall/Public/Admin/css/.css
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000023s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000393s ]
+ERR: 无法加载模块:Public
+
+[ 2015-11-07T15:17:29+08:00 ] 127.0.0.1 /mymall/Public/Admin/css/.css
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000022s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000389s ]
+ERR: 无法加载模块:Public
+
+[ 2015-11-07T15:17:53+08:00 ] 127.0.0.1 /mymall/Public/Admin/css/.css
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000021s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000406s ]
+ERR: 无法加载模块:Public
+
+[ 2015-11-07T15:18:02+08:00 ] 127.0.0.1 /mymall/Public/Admin/css/.css
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000027s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000476s ]
+ERR: 无法加载模块:Public
+
+[ 2015-11-07T15:19:21+08:00 ] 127.0.0.1 /mymall/Public/Admin/css/.css
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000019s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000377s ]
+ERR: 无法加载模块:Public
+
+[ 2015-11-07T15:20:40+08:00 ] 127.0.0.1 /mymall/Public/Admin/css/.css
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000023s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000419s ]
+ERR: 无法加载模块:Public
+

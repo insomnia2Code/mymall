@@ -60,12 +60,6 @@
             $(this).closest('.item').removeClass('focus');
         });
 
-        $(".login-form").on('focus', 'input', function(){
-            $(this).closet('.item').addClass('focus');
-        }).on('blur', 'input', function(){
-            $(this).closet('.item').removeClass('focus');
-        });
-
     	//表单提交
     	$(document)
 	    	.ajaxStart(function(){
