@@ -120,7 +120,7 @@
                     <label class="item-label">商品分类<?php echo ($info["cat_id"]); ?><span class="check-tips">（用于后台显示的配置标题）</span></label>
                     <div class="controls">
                        <select name="cat_id">
-                            <?php if(is_array($Menus)): $i = 0; $__LIST__ = $Menus;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$menu): $mod = ($i % 2 );++$i;?><option value="<?php echo ($menu["id"]); ?>" <?php if($info[cat_id] == $menu[id]): ?>selected<?php endif; ?>><?php echo ($menu["title_show"]); ?></option><?php endforeach; endif; else: echo "" ;endif; ?>
+                            <?php if(is_array($Category)): $i = 0; $__LIST__ = $Category;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$cate): $mod = ($i % 2 );++$i;?><option value="<?php echo ($cate["id"]); ?>" <?php if($info[cat_id] == $cate[id]): ?>selected<?php endif; ?>><?php echo ($cate["title"]); ?></option><?php endforeach; endif; else: echo "" ;endif; ?>
                         </select>
                     </div>
                 </div>
@@ -161,7 +161,7 @@
                     <label class="item-label">缩略图</label>
                     <div class="controls">
                         <input type="file" id="upload_picture_thumb">
-                        <input type="hidden" name="thumb" id="cover_id_thumb" value="<?php echo ($info['thumb']); ?>"/>
+                        <input type="hidden" name="picurl" id="cover_id_thumb" value="<?php echo ($info['picurl']); ?>"/>
                         <div class="upload-img-box">
                         <?php if(!empty($info['thumb'])): ?><div class="upload-pre-item"><img src=".<?php echo ($info['thumb']); ?>"/></div><?php endif; ?>
                         </div>
@@ -222,6 +222,7 @@
                     <div class="controls">
                         <label class="textarea">
                             <textarea name="content"><?php echo ($info["content"]); ?></textarea>
+                            <?php echo hook('adminArticleEdit', array('name'=>'content','value'=>$info['content']));?>
                             </label>
                     </div>
                 </div>
@@ -341,73 +342,73 @@
 <script type="text/javascript" src="/mymall/Public/static/datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
 <script type="text/javascript" src="/mymall/Public/static/datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
 <script type="text/javascript">
-//上传图片
-/* 初始化上传插件 */
-$("#upload_picture_thumb").uploadify({
-    "height"          : 30,
-    "swf"             : "/mymall/Public/static/uploadify/uploadify.swf",
-    "fileObjName"     : "download",
-    "buttonText"      : "上传图片",
-    "uploader"        : "<?php echo U('File/uploadPicture',array('session_id'=>session_id()));?>",
-    "width"           : 120,
-    'removeTimeout'   : 1,
-    'fileTypeExts'    : '*.jpg; *.png; *.gif;*.jpeg;',
-    "onUploadSuccess" : uploadPicturethumb,
-    'onFallback' : function() {
-        alert('未检测到兼容版本的Flash.');
+    /* 初始化上传插件 */
+    $("#upload_picture_thumb").uploadify({
+        "height"          : 30,
+        "swf"             : "/mymall/Public/static/uploadify/uploadify.swf",
+        "fileObjName"     : "download",
+        "buttonText"      : "上传图片",
+        "uploader"        : "<?php echo U('File/uploadPicture',array('session_id'=>session_id()));?>",
+        "width"           : 120,
+        'removeTimeout'   : 1,
+        'fileTypeExts'    : '*.jpg; *.png; *.gif;*.jpeg;',
+        "onUploadSuccess" : uploadPicturethumb,
+        'onFallback' : function() {
+            alert('未检测到兼容版本的Flash.');
+        }
+    });
+
+    function uploadPicturethumb(file, data){
+        var data = $.parseJSON(data);
+        var src = '';
+        if(data.status){
+            $("#cover_id_thumb").val(data.path);
+            src = data.url || '/mymall' + data.path
+            $("#cover_id_thumb").parent().find('.upload-img-box').html(
+                '<div class="upload-pre-item"><img src="' + src + '"/></div>'
+            );
+        } else {
+            updateAlert(data.info);
+            setTimeout(function(){
+                $('#top-alert').find('button').click();
+                $(that).removeClass('disabled').prop('disabled',false);
+            },1500);
+        }
     }
-});
-function uploadPicturethumb(file, data){
-    var data = $.parseJSON(data);
-    var src = '';
-    if(data.status){
-        $("#cover_id_thumb").val(data.path);
-        src = data.url || '/mymall' + data.path
-        $("#cover_id_thumb").parent().find('.upload-img-box').html(
-            '<div class="upload-pre-item"><img src="' + src + '"/></div>'
-        );
-    } else {
-        updateAlert(data.info);
-        setTimeout(function(){
-            $('#top-alert').find('button').click();
-            $(that).removeClass('disabled').prop('disabled',false);
-        },1500);
+    //上传多张图片
+    $("#upload_picture_picurl").uploadify({
+        "height"          : 30,
+        "swf"             : "/mymall/Public/static/uploadify/uploadify.swf",
+        "fileObjName"     : "download",
+        "buttonText"      : "上传图片",
+        "uploader"        : "<?php echo U('File/uploadPicture',array('session_id'=>session_id()));?>",
+        "width"           : 120,
+        'removeTimeout'   : 1,
+        'fileTypeExts'    : '*.jpg; *.png; *.gif;*.jpeg;',
+        "onUploadSuccess" : uploadPicturepicurl,
+        'onFallback' : function() {
+            alert('未检测到兼容版本的Flash.');
+        }
+    });
+    function uploadPicturepicurl(file, data){
+        var data = $.parseJSON(data);
+        var src = '';
+        if(data.status){
+            $("#picurl").append(
+                '<input type="hidden" name="picurl[]" value="'+data.id+'"/>'
+            );
+            src = data.url || '/mymall' + data.path
+            $("#picurl").parent().find('.upload-img-box').append(
+                '<div class="upload-pre-item"><img src="' + src + '"/></div>'
+            );
+        } else {
+            updateAlert(data.info);
+            setTimeout(function(){
+                $('#top-alert').find('button').click();
+                $(that).removeClass('disabled').prop('disabled',false);
+            },1500);
+        }
     }
-}
-//上传多张图片
-$("#upload_picture_picurl").uploadify({
-    "height"          : 30,
-    "swf"             : "/mymall/Public/static/uploadify/uploadify.swf",
-    "fileObjName"     : "download",
-    "buttonText"      : "上传图片",
-    "uploader"        : "<?php echo U('File/uploadPicture',array('session_id'=>session_id()));?>",
-    "width"           : 120,
-    'removeTimeout'   : 1,
-    'fileTypeExts'    : '*.jpg; *.png; *.gif;*.jpeg;',
-    "onUploadSuccess" : uploadPicturepicurl,
-    'onFallback' : function() {
-        alert('未检测到兼容版本的Flash.');
-    }
-});
-function uploadPicturepicurl(file, data){
-    var data = $.parseJSON(data);
-    var src = '';
-    if(data.status){
-        $("#picurl").append(
-            '<input type="hidden" name="picurl[]" value="'+data.id+'"/>'
-        );
-        src = data.url || '/mymall' + data.path
-        $("#picurl").parent().find('.upload-img-box').append(
-            '<div class="upload-pre-item"><img src="' + src + '"/></div>'
-        );
-    } else {
-        updateAlert(data.info);
-        setTimeout(function(){
-            $('#top-alert').find('button').click();
-            $(that).removeClass('disabled').prop('disabled',false);
-        },1500);
-    }
-}
 </script>
 <script type="text/javascript">
 

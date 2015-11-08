@@ -46,6 +46,7 @@ class Think {
           $content =  '';
           // 读取应用模式
           $mode   =   include is_file(CONF_PATH.'core.php')?CONF_PATH.'core.php':MODE_PATH.APP_MODE.'.php';
+
           // 加载核心文件
           foreach ($mode['core'] as $file){
               if(is_file($file)) {
@@ -72,6 +73,8 @@ class Think {
           if(is_file(CONF_PATH.'alias.php'))
               self::addMap(include CONF_PATH.'alias.php');
 
+           
+
           // 加载模式行为定义
           if(isset($mode['tags'])) {
               Hook::import(is_array($mode['tags'])?$mode['tags']:include $mode['tags']);
@@ -80,7 +83,7 @@ class Think {
           // 加载应用行为定义
           if(is_file(CONF_PATH.'tags.php'))
               // 允许应用增加开发模式配置定义
-              Hook::import(include CONF_PATH.'tags.php');   
+              Hook::import(include CONF_PATH.'tags.php');    
 
           // 加载框架底层语言包
           L(include THINK_PATH.'Lang/'.strtolower(C('DEFAULT_LANG')).'.php');

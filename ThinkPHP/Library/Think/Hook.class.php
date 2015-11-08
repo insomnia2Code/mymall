@@ -79,12 +79,13 @@ class Hook {
      * @return void
      */
     static public function listen($tag, &$params=NULL) {
-        if(isset(self::$tags[$tag])) {
+        if(isset(self::$tags[$tag])) {           
             if(APP_DEBUG) {
                 G($tag.'Start');
                 trace('[ '.$tag.' ] --START--','','INFO');
             }
             foreach (self::$tags[$tag] as $name) {
+
                 APP_DEBUG && G($name.'_start');
                 $result =   self::exec($name, $tag,$params);
                 if(APP_DEBUG){
@@ -115,7 +116,11 @@ class Hook {
             // 行为扩展必须用run入口方法
             $tag    =   'run';
         }
-        $addon   = new $name();
-        return $addon->$tag($params);
+        if(is_string($name)){
+            $addon   = new $name();
+            return $addon->$tag($params);
+        }else{
+            var_dump($name);
+        }
     }
 }

@@ -1,15 +1,6 @@
 <?php
 
 
-function is_login(){
-	if(session('username')){
-		return 1;
-	}else{
-		return 0;
-	}
-}
-
-
 /**
  * 检测验证码
  * @param  integer $id 验证码ID
