@@ -16,6 +16,10 @@
     <script type="text/javascript" src="/mymall/Public/Admin/js/jquery.mousewheel.js"></script>
     <!--<![endif]-->
     
+    <style>
+        body{padding: 0}
+    </style>
+
 </head>
 <body>
     <!-- 头部 -->
@@ -47,19 +51,6 @@
     <div class="sidebar">
         <!-- 子导航 -->
         
-            <div id="subnav" class="subnav">
-                <?php if(!empty($_extra_menu)): ?>
-                    <?php echo extra_menu($_extra_menu,$__MENU__); endif; ?>
-                <?php if(is_array($__MENU__["child"])): $i = 0; $__LIST__ = $__MENU__["child"];if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$sub_menu): $mod = ($i % 2 );++$i;?><!-- 子导航 -->
-                    <?php if(!empty($sub_menu)): if(!empty($key)): ?><h3><i class="icon icon-unfold"></i><?php echo ($key); ?></h3><?php endif; ?>
-                        <ul class="side-sub-menu">
-                            <?php if(is_array($sub_menu)): $i = 0; $__LIST__ = $sub_menu;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$menu): $mod = ($i % 2 );++$i;?><li>
-                                    <a class="item" href="<?php echo (U($menu["url"])); ?>"><?php echo ($menu["title"]); ?></a>
-                                </li><?php endforeach; endif; else: echo "" ;endif; ?>
-                        </ul><?php endif; ?>
-                    <!-- /子导航 --><?php endforeach; endif; else: echo "" ;endif; ?>
-            </div>
-        
         <!-- /子导航 -->
     </div>
     <!-- /边栏 -->
@@ -85,76 +76,10 @@
             
 
             
-    <div class="main-title">
-        <h2><?php if(isset($data)): ?>[ <?php echo ($data["title"]); ?> ] 子<?php endif; ?>产品管理 </h2>
-    </div>
-
-    <div class="cf">
-        <a class="btn" href="<?php echo U('add',array('pid'=>I('get.pid',0)));?>">新 增</a>
-        <button class="btn ajax-post confirm" url="<?php echo U('del');?>" target-form="ids">删 除</button>
-        <a class="btn" href="<?php echo U('import',array('pid'=>I('get.pid',0)));?>">导 入</a>
-        <button class="btn list_sort" url="<?php echo U('sort',array('pid'=>I('get.pid',0)),'');?>">排序</button>
-        <!-- 高级搜索 -->
-        <div class="search-form fr cf">
-            <div class="sleft">
-                <input type="text" name="title" class="search-input" value="<?php echo I('title');?>" placeholder="请输入商品名称">
-                <a class="sch-btn" href="javascript:;" id="search" url="/mymall/admin.php?s=/Goods/index.html"><i class="btn-search"></i></a>
-            </div>
-        </div>
-    </div>
-
-    <div class="data-table table-striped">
-        <form class="ids">
-            <table>
-                <thead>
-                    <tr>
-                        <th class="row-selected" width="2%">
-                            <input class="checkbox check-all" type="checkbox">
-                        </th>
-                        <th width="3%">ID</th>
-                        <th width="20%">名称</th>
-                        <th width="12%">货号(sku)</th>
-                        <th width="8%">价格</th>
-                        <th width="5%">上架</th>
-                        <th width="5%">精品</th>
-                        <th width="5%">新品</th>
-                        <th width="5%">热销</th>
-                        <th width="5%">排序</th>
-                        <th width="5%">库存</th>
-                        <th width="15%" style="text-align:center;">预览</th>
-                        <th width="10%">操作</th>
-                    </tr>
-                </thead>
-                <tbody>
-				<?php if(!empty($list)): if(is_array($list)): $i = 0; $__LIST__ = $list;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$goods): $mod = ($i % 2 );++$i;?><tr>
-                        <td><input class="ids row-selected" type="checkbox" name="id[]" value="<?php echo ($goods["id"]); ?>"></td>
-                        <td><?php echo ($goods["id"]); ?></td>
-                        <td>
-                            <a href="<?php echo U('index?pid='.$goods['id']);?>"><?php echo ($goods["title"]); ?></a>
-                        </td>
-                        <td><?php echo ((isset($goods["goods_no"]) && ($goods["goods_no"] !== ""))?($goods["goods_no"]):''); ?></td>
-                        <td><?php echo ($goods["price"]); ?></td>
-                        <td><a href="<?php echo U('toogleHide',array('id'=>$goods['id'],'value'=>abs($goods['is_on_sale']-1)));?>" class="ajax-get"><?php echo ($goods["is_on_sale"]); ?></a></td>
-                        <td><a href="<?php echo U('toogleHide',array('id'=>$goods['id'],'value'=>abs($goods['is_best']-1)));?>" class="ajax-get"><?php echo ($goods["is_best"]); ?></a></td>
-                        <td><a href="<?php echo U('toogleHide',array('id'=>$goods['id'],'value'=>abs($goods['is_new']-1)));?>" class="ajax-get"><?php echo ($goods["is_new"]); ?></a></td>
-                        <td><a href="<?php echo U('toogleHide',array('id'=>$goods['id'],'value'=>abs($goods['is_hot']-1)));?>" class="ajax-get"><?php echo ($goods["is_hot"]); ?></a></td>
-                        <td><?php echo ($goods["listorder"]); ?></td>
-                        <td><?php echo ($goods["goods_num"]); ?></td>
-                        <td style="text-align:center;"><img src=".<?php echo ($goods["picurl"]); ?>" height="60" ></td>
-                        <td>
-                            <a title="编辑" href="<?php echo U('edit?id='.$goods['id']);?>">编辑</a>
-                            <a class="confirm ajax-get" title="删除" href="<?php echo U('del?id='.$goods['id']);?>">删除</a>
-                        </td>
-                    </tr><?php endforeach; endif; else: echo "" ;endif; ?>
-				<?php else: ?>
-				<td colspan="10" class="text-center"> aOh! 暂时还没有内容! </td><?php endif; ?>
-                </tbody>
-            </table>
-        </form>
-        <!-- 分页 -->
-        <div class="page">
-            <?php echo ($page); ?>
-        </div>
+    <!-- 主体 -->
+    <div id="indexMain" class="index-main">
+       <!-- 插件块 -->
+       <div class="container-span"></div>
     </div>
 
         </div>
@@ -250,49 +175,20 @@
         }();
     </script>
     
-    <script type="text/javascript">
-        $(function() {
-            //搜索功能
-            $("#search").click(function() {
-                var url = $(this).attr('url');
-                var query = $('.search-form').find('input').serialize();
-                query = query.replace(/(&|^)(\w*?\d*?\-*?_*?)*?=?((?=&)|(?=$))/g, '');
-                query = query.replace(/^&/g, '');
-                if (url.indexOf('?') > 0) {
-                    url += '&' + query;
-                } else {
-                    url += '?' + query;
-                }
-                window.location.href = url;
-            });
-            //回车搜索
-            $(".search-input").keyup(function(e) {
-                if (e.keyCode === 13) {
-                    $("#search").click();
-                    return false;
-                }
-            });
-            //导航高亮
-            highlight_subnav('<?php echo U('index');?>');
-            //点击排序
-        	$('.list_sort').click(function(){
-        		var url = $(this).attr('url');
-        		var ids = $('.ids:checked');
-        		var param = '';
-        		if(ids.length > 0){
-        			var str = new Array();
-        			ids.each(function(){
-        				str.push($(this).val());
-        			});
-        			param = str.join(',');
-        		}
-
-        		if(url != undefined && url != ''){
-        			window.location.href = url + '/ids/' + param;
-        		}
-        	});
+<script type="text/javascript">
+    /* 插件块关闭操作 */
+    $(".title-opt .wm-slide").each(function(){
+        $(this).click(function(){
+            $(this).closest(".columns-mod").find(".bd").toggle();
+            $(this).find("i").toggleClass("mod-up");
         });
-    </script>
+    })
+    $(function(){
+        // $('#main').attr({'id': 'indexMain','class': 'index-main'});
+        $('.copyright').html('<div class="copyright"> ©2013-2014 上海顶想信息科技有限公司版权所有</div>');
+        $('.sidebar').remove();
+    })
+</script>
 
 </body>
 </html>

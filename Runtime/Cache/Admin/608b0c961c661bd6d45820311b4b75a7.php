@@ -107,13 +107,13 @@
                 <div class="form-item">
                     <label class="item-label">商品名称</label>
                     <div class="controls">
-                        <input type="text" class="text input-large" name="goods_name" value="<?php echo ((isset($info["goods_name"]) && ($info["goods_name"] !== ""))?($info["goods_name"]):''); ?>">
+                        <input type="text" class="text input-large" name="title" value="<?php echo ((isset($info["title"]) && ($info["title"] !== ""))?($info["title"]):''); ?>">
                     </div>
                 </div>
                 <div class="form-item">
                     <label class="item-label">商品货号(No)<span class="check-tips">（用于分别商品）</span></label>
                     <div class="controls">
-                        <input type="text" class="text input-large" name="good_no" value="<?php echo ((isset($info["good_no"]) && ($info["good_no"] !== ""))?($info["good_no"]):''); ?>">
+                        <input type="text" class="text input-large" name="goods_no" value="<?php echo ((isset($info["goods_no"]) && ($info["goods_no"] !== ""))?($info["goods_no"]):''); ?>">
                     </div>
                 </div>
                 <div class="form-item">
@@ -135,7 +135,7 @@
                 <div class="form-item">
                     <label class="item-label">商品价格<span class="check-tips">（用于后台显示的配置标题）</span></label>
                     <div class="controls">
-                        <input type="text" class="text input-large" name="shop_price" value="<?php echo ((isset($info["shop_price"]) && ($info["shop_price"] !== ""))?($info["shop_price"]):''); ?>">
+                        <input type="text" class="text input-large" name="price" value="<?php echo ((isset($info["price"]) && ($info["price"] !== ""))?($info["price"]):''); ?>">
                     </div>
                 </div>
                 <div class="form-item">
@@ -163,7 +163,7 @@
                         <input type="file" id="upload_picture_thumb">
                         <input type="hidden" name="picurl" id="cover_id_thumb" value="<?php echo ($info['picurl']); ?>"/>
                         <div class="upload-img-box">
-                        <?php if(!empty($info['thumb'])): ?><div class="upload-pre-item"><img src=".<?php echo ($info['thumb']); ?>"/></div><?php endif; ?>
+                        <?php if(!empty($info['picurl'])): ?><div class="upload-pre-item"><img src=".<?php echo ($info['picurl']); ?>"/></div><?php endif; ?>
                         </div>
                     </div>
                    
@@ -177,7 +177,7 @@
 
                         </div>
                         <div class="upload-img-box">
-                        <?php if(!empty($info['picurl'])): if(is_array($info['picurl'])): $i = 0; $__LIST__ = $info['picurl'];if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$picurl): $mod = ($i % 2 );++$i;?><div class="upload-pre-item"><img src="<?php echo (get_cover($picurl,'path')); ?>"/></div><?php endforeach; endif; else: echo "" ;endif; endif; ?>
+                        <?php if(!empty($info['pic_arr'])): if(is_array($info['pic_arr'])): $i = 0; $__LIST__ = $info['pic_arr'];if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$pic): $mod = ($i % 2 );++$i;?><div class="upload-pre-item"><img src=".<?php echo ($pic[path]); ?>"/></div><?php endforeach; endif; else: echo "" ;endif; endif; ?>
                         </div>
                     </div>
                 </div>
@@ -196,15 +196,14 @@
                     <label class="item-label">商品类型</label>
                     <div class="controls">
                         <select name="type" id="type">
-                            <?php if(is_array($Product)): $i = 0; $__LIST__ = $Product;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$pro): $mod = ($i % 2 );++$i;?><option value="<?php echo ($pro["id"]); ?>" <?php if($pro[id] == $info[type]): ?>selected<?php endif; ?>><?php echo ($pro["name"]); ?></option><?php endforeach; endif; else: echo "" ;endif; ?>
+                            <?php if(is_array($type)): $i = 0; $__LIST__ = $type;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$pro): $mod = ($i % 2 );++$i;?><option value="<?php echo ($pro["id"]); ?>" <?php if($pro[id] == $info[type]): ?>selected<?php endif; ?>><?php echo ($pro["name"]); ?></option><?php endforeach; endif; else: echo "" ;endif; ?>
                         </select>
                     </div>
                 </div>
                 <div class="form-item">
                     <label class="item-label">商品属性<span class="check-tips">（用于分别商品）</span></label>
                     <div class="controls">
-                        <table class="attr_table" id="attr_table">
-                            
+                        <table class="attr_table" id="attr_table">                            
                             <tr><td colspan="10" style="text-align:left;"><span id="addattr">新增</span></td></tr>
                         </table>
                     </div>
@@ -234,10 +233,10 @@
             <a class="btn btn-return" href="<?php echo U('article/index?cate_id='.$cate_id);?>">返 回</a>
             
             <input type="hidden" name="id" value="<?php echo ((isset($info["id"]) && ($info["id"] !== ""))?($info["id"]):''); ?>"/>
-            <input type="hidden" name="pid" value="<?php echo ((isset($info["pid"]) && ($info["pid"] !== ""))?($info["pid"]):''); ?>"/>
+            <!-- <input type="hidden" name="pid" value="<?php echo ((isset($info["pid"]) && ($info["pid"] !== ""))?($info["pid"]):''); ?>"/>
             <input type="hidden" name="model_id" value="<?php echo ((isset($info["model_id"]) && ($info["model_id"] !== ""))?($info["model_id"]):''); ?>"/>
             <input type="hidden" name="group_id" value="<?php echo ((isset($info["group_id"]) && ($info["group_id"] !== ""))?($info["group_id"]):''); ?>"/>
-            <input type="hidden" name="category_id" value="<?php echo ((isset($info["category_id"]) && ($info["category_id"] !== ""))?($info["category_id"]):''); ?>">
+            <input type="hidden" name="category_id" value="<?php echo ((isset($info["category_id"]) && ($info["category_id"] !== ""))?($info["category_id"]):''); ?>"> -->
         </div>
     </form>
     </div>
@@ -395,7 +394,7 @@
         var src = '';
         if(data.status){
             $("#picurl").append(
-                '<input type="hidden" name="picurl[]" value="'+data.id+'"/>'
+                '<input type="hidden" name="pic_arr[]" value="'+data.id+'"/>'
             );
             src = data.url || '/mymall' + data.path
             $("#picurl").parent().find('.upload-img-box').append(

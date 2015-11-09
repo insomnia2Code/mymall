@@ -90,15 +90,15 @@
     </div>
 
     <div class="cf">
-        <a class="btn" href="<?php echo U('add',array('pid'=>I('get.pid',0)));?>">新 增</a>
-        <button class="btn ajax-post confirm" url="<?php echo U('del');?>" target-form="ids">删 除</button>
+        <button class="btn ajax-post confirm" url="<?php echo U('reback');?>" target-form="ids">还 原</button>
+        <button class="btn ajax-post confirm" url="<?php echo U('delforever');?>" target-form="ids">彻底删除</button>
         <a class="btn" href="<?php echo U('import',array('pid'=>I('get.pid',0)));?>">导 入</a>
         <button class="btn list_sort" url="<?php echo U('sort',array('pid'=>I('get.pid',0)),'');?>">排序</button>
         <!-- 高级搜索 -->
         <div class="search-form fr cf">
             <div class="sleft">
                 <input type="text" name="title" class="search-input" value="<?php echo I('title');?>" placeholder="请输入商品名称">
-                <a class="sch-btn" href="javascript:;" id="search" url="/mymall/admin.php?s=/Goods/index.html"><i class="btn-search"></i></a>
+                <a class="sch-btn" href="javascript:;" id="search" url="/mymall/admin.php?s=/Goods/recycle.html"><i class="btn-search"></i></a>
             </div>
         </div>
     </div>
@@ -121,7 +121,7 @@
                         <th width="5%">热销</th>
                         <th width="5%">排序</th>
                         <th width="5%">库存</th>
-                        <th width="15%" style="text-align:center;">预览</th>
+                        <th width="15%">预览</th>
                         <th width="10%">操作</th>
                     </tr>
                 </thead>
@@ -130,20 +130,20 @@
                         <td><input class="ids row-selected" type="checkbox" name="id[]" value="<?php echo ($goods["id"]); ?>"></td>
                         <td><?php echo ($goods["id"]); ?></td>
                         <td>
-                            <a href="<?php echo U('index?pid='.$goods['id']);?>"><?php echo ($goods["title"]); ?></a>
+                            <a href="<?php echo U('index?pid='.$goods['id']);?>"><?php echo ($goods["goods_name"]); ?></a>
                         </td>
-                        <td><?php echo ((isset($goods["goods_no"]) && ($goods["goods_no"] !== ""))?($goods["goods_no"]):''); ?></td>
-                        <td><?php echo ($goods["price"]); ?></td>
+                        <td><?php echo ((isset($goods["sku"]) && ($goods["sku"] !== ""))?($goods["sku"]):''); ?></td>
+                        <td><?php echo ($goods["shop_price"]); ?></td>
                         <td><a href="<?php echo U('toogleHide',array('id'=>$goods['id'],'value'=>abs($goods['is_on_sale']-1)));?>" class="ajax-get"><?php echo ($goods["is_on_sale"]); ?></a></td>
                         <td><a href="<?php echo U('toogleHide',array('id'=>$goods['id'],'value'=>abs($goods['is_best']-1)));?>" class="ajax-get"><?php echo ($goods["is_best"]); ?></a></td>
                         <td><a href="<?php echo U('toogleHide',array('id'=>$goods['id'],'value'=>abs($goods['is_new']-1)));?>" class="ajax-get"><?php echo ($goods["is_new"]); ?></a></td>
                         <td><a href="<?php echo U('toogleHide',array('id'=>$goods['id'],'value'=>abs($goods['is_hot']-1)));?>" class="ajax-get"><?php echo ($goods["is_hot"]); ?></a></td>
                         <td><?php echo ($goods["listorder"]); ?></td>
                         <td><?php echo ($goods["goods_num"]); ?></td>
-                        <td style="text-align:center;"><img src=".<?php echo ($goods["picurl"]); ?>" height="60" ></td>
+                        <td><img src=".<?php echo ($goods["picurl"]); ?>"></td>
                         <td>
-                            <a title="编辑" href="<?php echo U('edit?id='.$goods['id']);?>">编辑</a>
-                            <a class="confirm ajax-get" title="删除" href="<?php echo U('del?id='.$goods['id']);?>">删除</a>
+                            <a class="confirm ajax-get" title="编辑" href="<?php echo U('reback?id='.$goods['id']);?>">还原</a>
+                            <a class="confirm ajax-get" title="删除" href="<?php echo U('delforever?id='.$goods['id']);?>">删除</a>
                         </td>
                     </tr><?php endforeach; endif; else: echo "" ;endif; ?>
 				<?php else: ?>

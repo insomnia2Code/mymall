@@ -86,7 +86,7 @@
 
             
     <div class="main-title">
-        <h2><?php if(isset($data)): ?>[ <?php echo ($data["title"]); ?> ] 子<?php endif; ?>产品管理 </h2>
+        <h2><?php if(isset($data)): ?>[ <?php echo ($data["title"]); ?> ] 子<?php endif; ?>产品类型管理 </h2>
     </div>
 
     <div class="cf">
@@ -97,8 +97,8 @@
         <!-- 高级搜索 -->
         <div class="search-form fr cf">
             <div class="sleft">
-                <input type="text" name="title" class="search-input" value="<?php echo I('title');?>" placeholder="请输入商品名称">
-                <a class="sch-btn" href="javascript:;" id="search" url="/mymall/admin.php?s=/Goods/index.html"><i class="btn-search"></i></a>
+                <input type="text" name="title" class="search-input" value="<?php echo I('title');?>" placeholder="请输入菜单名称">
+                <a class="sch-btn" href="javascript:;" id="search" url="/mymall/admin.php?s=/GoodsAttr/index.html"><i class="btn-search"></i></a>
             </div>
         </div>
     </div>
@@ -108,42 +108,33 @@
             <table>
                 <thead>
                     <tr>
-                        <th class="row-selected" width="2%">
+                        <th class="row-selected">
                             <input class="checkbox check-all" type="checkbox">
                         </th>
-                        <th width="3%">ID</th>
-                        <th width="20%">名称</th>
-                        <th width="12%">货号(sku)</th>
-                        <th width="8%">价格</th>
-                        <th width="5%">上架</th>
-                        <th width="5%">精品</th>
-                        <th width="5%">新品</th>
-                        <th width="5%">热销</th>
-                        <th width="5%">排序</th>
-                        <th width="5%">库存</th>
-                        <th width="15%" style="text-align:center;">预览</th>
-                        <th width="10%">操作</th>
+                        <th>ID</th>
+                        <th>名称</th>
+                        <th>排序</th>
+                        <th>状态</th>
+                        <th>操作</th>
                     </tr>
                 </thead>
                 <tbody>
-				<?php if(!empty($list)): if(is_array($list)): $i = 0; $__LIST__ = $list;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$goods): $mod = ($i % 2 );++$i;?><tr>
-                        <td><input class="ids row-selected" type="checkbox" name="id[]" value="<?php echo ($goods["id"]); ?>"></td>
-                        <td><?php echo ($goods["id"]); ?></td>
+				<?php if(!empty($list)): if(is_array($list)): $i = 0; $__LIST__ = $list;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$attr): $mod = ($i % 2 );++$i;?><tr>
+                        <td><input class="ids row-selected" type="checkbox" name="id[]" value="<?php echo ($menu["id"]); ?>"></td>
+                        <td><?php echo ($attr["id"]); ?></td>
                         <td>
-                            <a href="<?php echo U('index?pid='.$goods['id']);?>"><?php echo ($goods["title"]); ?></a>
+                            <a href="<?php echo U('index?pid='.$menu['id']);?>"><?php echo ($attr["name"]); ?></a>
+                        </td>                        
+                        <td><?php echo ($attr["sort"]); ?></td>
+                        <td>
+                            <a href="<?php echo U('toogleHide',array('id'=>$product['id'],'value'=>abs($product['status']-1)));?>" class="ajax-get">
+                            <?php echo ($attr["status"]); ?>
+                            </a>
                         </td>
-                        <td><?php echo ((isset($goods["goods_no"]) && ($goods["goods_no"] !== ""))?($goods["goods_no"]):''); ?></td>
-                        <td><?php echo ($goods["price"]); ?></td>
-                        <td><a href="<?php echo U('toogleHide',array('id'=>$goods['id'],'value'=>abs($goods['is_on_sale']-1)));?>" class="ajax-get"><?php echo ($goods["is_on_sale"]); ?></a></td>
-                        <td><a href="<?php echo U('toogleHide',array('id'=>$goods['id'],'value'=>abs($goods['is_best']-1)));?>" class="ajax-get"><?php echo ($goods["is_best"]); ?></a></td>
-                        <td><a href="<?php echo U('toogleHide',array('id'=>$goods['id'],'value'=>abs($goods['is_new']-1)));?>" class="ajax-get"><?php echo ($goods["is_new"]); ?></a></td>
-                        <td><a href="<?php echo U('toogleHide',array('id'=>$goods['id'],'value'=>abs($goods['is_hot']-1)));?>" class="ajax-get"><?php echo ($goods["is_hot"]); ?></a></td>
-                        <td><?php echo ($goods["listorder"]); ?></td>
-                        <td><?php echo ($goods["goods_num"]); ?></td>
-                        <td style="text-align:center;"><img src=".<?php echo ($goods["picurl"]); ?>" height="60" ></td>
                         <td>
-                            <a title="编辑" href="<?php echo U('edit?id='.$goods['id']);?>">编辑</a>
-                            <a class="confirm ajax-get" title="删除" href="<?php echo U('del?id='.$goods['id']);?>">删除</a>
+                            <a title="编辑属性" href="<?php echo U('Admin/GoodsAttr/lists?id='.$attr['id']);?>">属性列表</a>
+                            <a title="编辑" href="<?php echo U('edit?id='.$attr['id']);?>">编辑</a>
+                            <a class="confirm ajax-get" title="删除" href="<?php echo U('del?id='.$attr['id']);?>">删除</a>
                         </td>
                     </tr><?php endforeach; endif; else: echo "" ;endif; ?>
 				<?php else: ?>
@@ -153,7 +144,7 @@
         </form>
         <!-- 分页 -->
         <div class="page">
-            <?php echo ($page); ?>
+
         </div>
     </div>
 

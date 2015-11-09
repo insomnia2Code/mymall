@@ -25,13 +25,13 @@
                 <div class="form-item">
                     <label class="item-label">商品名称</label>
                     <div class="controls">
-                        <input type="text" class="text input-large" name="goods_name" value="{$info.goods_name|default=''}">
+                        <input type="text" class="text input-large" name="title" value="{$info.title|default=''}">
                     </div>
                 </div>
                 <div class="form-item">
                     <label class="item-label">商品货号(No)<span class="check-tips">（用于分别商品）</span></label>
                     <div class="controls">
-                        <input type="text" class="text input-large" name="good_no" value="{$info.good_no|default=''}">
+                        <input type="text" class="text input-large" name="goods_no" value="{$info.goods_no|default=''}">
                     </div>
                 </div>
                 <div class="form-item">
@@ -57,7 +57,7 @@
                 <div class="form-item">
                     <label class="item-label">商品价格<span class="check-tips">（用于后台显示的配置标题）</span></label>
                     <div class="controls">
-                        <input type="text" class="text input-large" name="shop_price" value="{$info.shop_price|default=''}">
+                        <input type="text" class="text input-large" name="price" value="{$info.price|default=''}">
                     </div>
                 </div>
                 <div class="form-item">
@@ -85,8 +85,8 @@
                         <input type="file" id="upload_picture_thumb">
                         <input type="hidden" name="picurl" id="cover_id_thumb" value="{$info['picurl']}"/>
                         <div class="upload-img-box">
-                        <notempty name="info['thumb']">
-                            <div class="upload-pre-item"><img src=".{$info['thumb']}"/></div>
+                        <notempty name="info['picurl']">
+                            <div class="upload-pre-item"><img src=".{$info['picurl']}"/></div>
                         </notempty>
                         </div>
                     </div>
@@ -101,9 +101,9 @@
 
                         </div>
                         <div class="upload-img-box">
-                        <notempty name="info['picurl']">
-                            <volist name="info['picurl']" id='picurl' >
-                                <div class="upload-pre-item"><img src="{$picurl|get_cover='path'}"/></div>
+                        <notempty name="info['pic_arr']">
+                            <volist name="info['pic_arr']" id='pic' >
+                                <div class="upload-pre-item"><img src=".{$pic[path]}"/></div>
                             </volist>
                         </notempty>
                         </div>
@@ -124,7 +124,7 @@
                     <label class="item-label">商品类型</label>
                     <div class="controls">
                         <select name="type" id="type">
-                            <volist name="Product" id="pro">
+                            <volist name="type" id="pro">
                                 <option value="{$pro.id}" <if condition="$pro[id] eq $info[type]">selected</if>>{$pro.name}</option>
                             </volist>
                         </select>
@@ -133,8 +133,7 @@
                 <div class="form-item">
                     <label class="item-label">商品属性<span class="check-tips">（用于分别商品）</span></label>
                     <div class="controls">
-                        <table class="attr_table" id="attr_table">
-                            
+                        <table class="attr_table" id="attr_table">                            
                             <tr><td colspan="10" style="text-align:left;"><span id="addattr">新增</span></td></tr>
                         </table>
                     </div>
@@ -164,10 +163,10 @@
             <a class="btn btn-return" href="{:U('article/index?cate_id='.$cate_id)}">返 回</a>
             
             <input type="hidden" name="id" value="{$info.id|default=''}"/>
-            <input type="hidden" name="pid" value="{$info.pid|default=''}"/>
+            <!-- <input type="hidden" name="pid" value="{$info.pid|default=''}"/>
             <input type="hidden" name="model_id" value="{$info.model_id|default=''}"/>
             <input type="hidden" name="group_id" value="{$info.group_id|default=''}"/>
-            <input type="hidden" name="category_id" value="{$info.category_id|default=''}">
+            <input type="hidden" name="category_id" value="{$info.category_id|default=''}"> -->
         </div>
     </form>
     </div>
@@ -234,7 +233,7 @@
         var src = '';
         if(data.status){
             $("#picurl").append(
-                '<input type="hidden" name="picurl[]" value="'+data.id+'"/>'
+                '<input type="hidden" name="pic_arr[]" value="'+data.id+'"/>'
             );
             src = data.url || '__ROOT__' + data.path
             $("#picurl").parent().find('.upload-img-box').append(
