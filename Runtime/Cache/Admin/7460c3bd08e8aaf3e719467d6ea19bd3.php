@@ -272,8 +272,7 @@
                     return false;
                 }
             });
-            //导航高亮
-            highlight_subnav('<?php echo U('index');?>');
+            
             //点击排序
         	$('.list_sort').click(function(){
         		var url = $(this).attr('url');

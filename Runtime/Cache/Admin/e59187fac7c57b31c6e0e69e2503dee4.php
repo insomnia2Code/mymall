@@ -121,7 +121,7 @@
                         <th width="5%">热销</th>
                         <th width="5%">排序</th>
                         <th width="5%">库存</th>
-                        <th width="15%">预览</th>
+                        <th width="15%" style="text-align:center;">预览</th>
                         <th width="10%">操作</th>
                     </tr>
                 </thead>
@@ -140,7 +140,7 @@
                         <td><a href="<?php echo U('toogleHide',array('id'=>$goods['id'],'value'=>abs($goods['is_hot']-1)));?>" class="ajax-get"><?php echo ($goods["is_hot"]); ?></a></td>
                         <td><?php echo ($goods["listorder"]); ?></td>
                         <td><?php echo ($goods["goods_num"]); ?></td>
-                        <td><img src=".<?php echo ($goods["picurl"]); ?>"></td>
+                        <td style="text-align:center;"><img src=".<?php echo ($goods["picurl"]); ?>" height='60'></td>
                         <td>
                             <a class="confirm ajax-get" title="编辑" href="<?php echo U('reback?id='.$goods['id']);?>">还原</a>
                             <a class="confirm ajax-get" title="删除" href="<?php echo U('delforever?id='.$goods['id']);?>">删除</a>
@@ -272,8 +272,6 @@
                     return false;
                 }
             });
-            //导航高亮
-            highlight_subnav('<?php echo U('index');?>');
             //点击排序
         	$('.list_sort').click(function(){
         		var url = $(this).attr('url');

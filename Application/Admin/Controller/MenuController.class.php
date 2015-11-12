@@ -65,4 +65,13 @@ class MenuController extends AdminController{
 		}
 	}
 
+	public function del($id){
+		$res = M('Menu')->where(array('id'=>$id))->delete();
+		if($res){
+			$this->success('删除成功');
+		}else{
+			$this->error('删除失败');
+		}
+	}
+
 }

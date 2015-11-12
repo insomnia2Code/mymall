@@ -86,7 +86,7 @@
 
             
     <div class="main-title">
-        <h2><?php if(isset($data)): ?>[ <?php echo ($data["title"]); ?> ] 子<?php endif; ?>菜单管理 </h2>
+        <h2><?php if(isset($data)): ?>[ <?php echo ($data["title"]); ?> ] 子<?php endif; ?>产品类型管理 </h2>
     </div>
 
     <div class="cf">
@@ -98,7 +98,7 @@
         <div class="search-form fr cf">
             <div class="sleft">
                 <input type="text" name="title" class="search-input" value="<?php echo I('title');?>" placeholder="请输入菜单名称">
-                <a class="sch-btn" href="javascript:;" id="search" url="/mymall/admin.php?s=/Menu/index/pid/0.html"><i class="btn-search"></i></a>
+                <a class="sch-btn" href="javascript:;" id="search" url="/mymall/admin.php?s=/Product/index.html"><i class="btn-search"></i></a>
             </div>
         </div>
     </div>
@@ -113,39 +113,28 @@
                         </th>
                         <th>ID</th>
                         <th>名称</th>
-                        <th>上级菜单</th>
-                        <th>分组</th>
-                        <th>URL</th>
                         <th>排序</th>
-                        <th>仅开发者模式显示</th>
-                        <th>隐藏</th>
+                        <th>状态</th>
                         <th>操作</th>
                     </tr>
                 </thead>
                 <tbody>
-				<?php if(!empty($list)): if(is_array($list)): $i = 0; $__LIST__ = $list;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$menu): $mod = ($i % 2 );++$i;?><tr>
+				<?php if(!empty($list)): if(is_array($list)): $i = 0; $__LIST__ = $list;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$product): $mod = ($i % 2 );++$i;?><tr>
                         <td><input class="ids row-selected" type="checkbox" name="id[]" value="<?php echo ($menu["id"]); ?>"></td>
-                        <td><?php echo ($menu["id"]); ?></td>
+                        <td><?php echo ($product["id"]); ?></td>
                         <td>
-                            <a href="<?php echo U('index?pid='.$menu['id']);?>"><?php echo ($menu["title"]); ?></a>
-                        </td>
-                        <td><?php echo ((isset($menu["up_title"]) && ($menu["up_title"] !== ""))?($menu["up_title"]):'无'); ?></td>
-                        <td><?php echo ($menu["group"]); ?></td>
-                        <td><?php echo ($menu["url"]); ?></td>
-                        <td><?php echo ($menu["listorder"]); ?></td>
+                            <a href="<?php echo U('index?pid='.$menu['id']);?>"><?php echo ($product["name"]); ?></a>
+                        </td>                        
+                        <td><?php echo ($product["sort"]); ?></td>
                         <td>
-                            <a href="<?php echo U('toogleDev',array('id'=>$menu['id'],'value'=>abs($menu['is_dev']-1)));?>" class="ajax-get">
-                            <?php echo ($menu["is_dev_text"]); ?>
+                            <a href="<?php echo U('toogleHide',array('id'=>$product['id'],'value'=>abs($product['status']-1)));?>" class="ajax-get">
+                            <?php echo ($product["status"]); ?>
                             </a>
                         </td>
                         <td>
-                            <a href="<?php echo U('toogleHide',array('id'=>$menu['id'],'value'=>abs($menu['hide']-1)));?>" class="ajax-get">
-                            <?php echo ($menu["hide_text"]); ?>
-                            </a>
-                        </td>
-                        <td>
-                            <a title="编辑" href="<?php echo U('edit?id='.$menu['id']);?>">编辑</a>
-                            <a class="confirm ajax-get" title="删除" href="<?php echo U('del?id='.$menu['id']);?>">删除</a>
+                            <a title="编辑属性" href="<?php echo U('Admin/GoodsAttr/lists?product_id='.$product['id']);?>">添加属性</a>
+                            <a title="编辑" href="<?php echo U('edit?id='.$product['id']);?>">编辑</a>
+                            <a class="confirm ajax-get" title="删除" href="<?php echo U('del?id='.$product['id']);?>">删除</a>
                         </td>
                     </tr><?php endforeach; endif; else: echo "" ;endif; ?>
 				<?php else: ?>

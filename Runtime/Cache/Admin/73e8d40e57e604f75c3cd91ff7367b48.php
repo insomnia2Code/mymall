@@ -85,79 +85,37 @@
             
 
             
-    <div class="main-title">
-        <h2><?php if(isset($data)): ?>[ <?php echo ($data["title"]); ?> ] 子<?php endif; ?>菜单管理 </h2>
+    <script type="text/javascript" src="/mymall/Public/static/uploadify/jquery.uploadify.min.js"></script>
+    <div class="main-title cf">
+        <h2>
+            <?php echo isset($info['id'])?'编辑':'添加';?>商品属性
+        </h2>
     </div>
-
-    <div class="cf">
-        <a class="btn" href="<?php echo U('add',array('pid'=>I('get.pid',0)));?>">新 增</a>
-        <button class="btn ajax-post confirm" url="<?php echo U('del');?>" target-form="ids">删 除</button>
-        <a class="btn" href="<?php echo U('import',array('pid'=>I('get.pid',0)));?>">导 入</a>
-        <button class="btn list_sort" url="<?php echo U('sort',array('pid'=>I('get.pid',0)),'');?>">排序</button>
-        <!-- 高级搜索 -->
-        <div class="search-form fr cf">
-            <div class="sleft">
-                <input type="text" name="title" class="search-input" value="<?php echo I('title');?>" placeholder="请输入菜单名称">
-                <a class="sch-btn" href="javascript:;" id="search" url="/mymall/admin.php?s=/Menu/index/pid/0.html"><i class="btn-search"></i></a>
+    <!-- 标签页导航 -->
+<div class="tab-wrap">
+    <div class="tab-content">
+    <!-- 表单 -->
+    <form id="form" action="" method="post" class="form-horizontal">
+        <!-- 基础文档模型 -->        
+        
+        <div class="form-item">
+            <label class="item-label">属性名称</label>
+            <div class="controls">
+                <input type="text" class="text input-large" name="name" value="<?php echo ((isset($info["name"]) && ($info["name"] !== ""))?($info["name"]):''); ?>">
             </div>
         </div>
-    </div>
 
-    <div class="data-table table-striped">
-        <form class="ids">
-            <table>
-                <thead>
-                    <tr>
-                        <th class="row-selected">
-                            <input class="checkbox check-all" type="checkbox">
-                        </th>
-                        <th>ID</th>
-                        <th>名称</th>
-                        <th>上级菜单</th>
-                        <th>分组</th>
-                        <th>URL</th>
-                        <th>排序</th>
-                        <th>仅开发者模式显示</th>
-                        <th>隐藏</th>
-                        <th>操作</th>
-                    </tr>
-                </thead>
-                <tbody>
-				<?php if(!empty($list)): if(is_array($list)): $i = 0; $__LIST__ = $list;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$menu): $mod = ($i % 2 );++$i;?><tr>
-                        <td><input class="ids row-selected" type="checkbox" name="id[]" value="<?php echo ($menu["id"]); ?>"></td>
-                        <td><?php echo ($menu["id"]); ?></td>
-                        <td>
-                            <a href="<?php echo U('index?pid='.$menu['id']);?>"><?php echo ($menu["title"]); ?></a>
-                        </td>
-                        <td><?php echo ((isset($menu["up_title"]) && ($menu["up_title"] !== ""))?($menu["up_title"]):'无'); ?></td>
-                        <td><?php echo ($menu["group"]); ?></td>
-                        <td><?php echo ($menu["url"]); ?></td>
-                        <td><?php echo ($menu["listorder"]); ?></td>
-                        <td>
-                            <a href="<?php echo U('toogleDev',array('id'=>$menu['id'],'value'=>abs($menu['is_dev']-1)));?>" class="ajax-get">
-                            <?php echo ($menu["is_dev_text"]); ?>
-                            </a>
-                        </td>
-                        <td>
-                            <a href="<?php echo U('toogleHide',array('id'=>$menu['id'],'value'=>abs($menu['hide']-1)));?>" class="ajax-get">
-                            <?php echo ($menu["hide_text"]); ?>
-                            </a>
-                        </td>
-                        <td>
-                            <a title="编辑" href="<?php echo U('edit?id='.$menu['id']);?>">编辑</a>
-                            <a class="confirm ajax-get" title="删除" href="<?php echo U('del?id='.$menu['id']);?>">删除</a>
-                        </td>
-                    </tr><?php endforeach; endif; else: echo "" ;endif; ?>
-				<?php else: ?>
-				<td colspan="10" class="text-center"> aOh! 暂时还没有内容! </td><?php endif; ?>
-                </tbody>
-            </table>
-        </form>
-        <!-- 分页 -->
-        <div class="page">
-
+        <div class="form-item cf">
+            <button class="btn submit-btn ajax-post hidden" id="submit" type="submit" target-form="form-horizontal">确 定</button>
+            <a class="btn btn-return" href="<?php echo U('article/index?cate_id='.$cate_id);?>">返 回</a>
+            
+            <input type="hidden" name="id" value="<?php echo ((isset($info["id"]) && ($info["id"] !== ""))?($info["id"]):''); ?>"/>
+            <input type="hidden" name="pid" value="<?php echo I('get.attr_id',0);?>"/>
+            <input type="hidden" name="category_id" value="<?php echo ((isset($info["category_id"]) && ($info["category_id"] !== ""))?($info["category_id"]):''); ?>">
         </div>
+    </form>
     </div>
+</div>
 
         </div>
         <div class="cont-ft">
@@ -252,49 +210,91 @@
         }();
     </script>
     
-    <script type="text/javascript">
-        $(function() {
-            //搜索功能
-            $("#search").click(function() {
-                var url = $(this).attr('url');
-                var query = $('.search-form').find('input').serialize();
-                query = query.replace(/(&|^)(\w*?\d*?\-*?_*?)*?=?((?=&)|(?=$))/g, '');
-                query = query.replace(/^&/g, '');
-                if (url.indexOf('?') > 0) {
-                    url += '&' + query;
-                } else {
-                    url += '?' + query;
-                }
-                window.location.href = url;
-            });
-            //回车搜索
-            $(".search-input").keyup(function(e) {
-                if (e.keyCode === 13) {
-                    $("#search").click();
-                    return false;
-                }
-            });
-            //导航高亮
-            highlight_subnav('<?php echo U('index');?>');
-            //点击排序
-        	$('.list_sort').click(function(){
-        		var url = $(this).attr('url');
-        		var ids = $('.ids:checked');
-        		var param = '';
-        		if(ids.length > 0){
-        			var str = new Array();
-        			ids.each(function(){
-        				str.push($(this).val());
-        			});
-        			param = str.join(',');
-        		}
+<link href="/mymall/Public/static/datetimepicker/css/datetimepicker.css" rel="stylesheet" type="text/css">
+<?php if(C('COLOR_STYLE')=='blue_color') echo '<link href="/mymall/Public/static/datetimepicker/css/datetimepicker_blue.css" rel="stylesheet" type="text/css">'; ?>
+<link href="/mymall/Public/static/datetimepicker/css/dropdown.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="/mymall/Public/static/datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript" src="/mymall/Public/static/datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+<script type="text/javascript">
 
-        		if(url != undefined && url != ''){
-        			window.location.href = url + '/ids/' + param;
-        		}
-        	});
-        });
-    </script>
+//单选、复选框 是否选中
+Think.setValue("is_on_sale", <?php echo ((isset($info["is_on_sale"]) && ($info["is_on_sale"] !== ""))?($info["is_on_sale"]): 0); ?>);
+Think.setValue("is_hot", <?php echo ((isset($info["is_hot"]) && ($info["is_hot"] !== ""))?($info["is_hot"]): 0); ?>);
+Think.setValue("is_new", <?php echo ((isset($info["is_new"]) && ($info["is_new"] !== ""))?($info["is_new"]): 0); ?>);
+Think.setValue("is_best", <?php echo ((isset($info["is_best"]) && ($info["is_best"] !== ""))?($info["is_best"]): 0); ?>);
+
+$('#submit').click(function(){
+    $('#form').submit();
+});
+
+$(function(){
+    $('.date').datetimepicker({
+        format: 'yyyy-mm-dd',
+        language:"zh-CN",
+        minView:2,
+        autoclose:true
+    });
+    $('.time').datetimepicker({
+        format: 'yyyy-mm-dd hh:ii',
+        language:"zh-CN",
+        minView:2,
+        autoclose:true
+    });
+    showTab();
+
+    <?php if(C('OPEN_DRAFTBOX') and (ACTION_NAME == 'add' or $info['status'] == 3)): ?>//保存草稿
+    var interval;
+    $('#autoSave').click(function(){
+        var target_form = $(this).attr('target-form');
+        var target = $(this).attr('url')
+        var form = $('.'+target_form);
+        var query = form.serialize();
+        var that = this;
+
+        $(that).addClass('disabled').attr('autocomplete','off').prop('disabled',true);
+        $.post(target,query).success(function(data){
+            if (data.status==1) {
+                updateAlert(data.info ,'alert-success');
+                $('input[name=id]').val(data.data.id);
+            }else{
+                updateAlert(data.info);
+            }
+            setTimeout(function(){
+                $('#top-alert').find('button').click();
+                $(that).removeClass('disabled').prop('disabled',false);
+            },1500);
+        })
+
+        //重新开始定时器
+        clearInterval(interval);
+        autoSaveDraft();
+        return false;
+    });
+
+    //Ctrl+S保存草稿
+    $('body').keydown(function(e){
+        if(e.ctrlKey && e.which == 83){
+            $('#autoSave').click();
+            return false;
+        }
+    });
+
+    //每隔一段时间保存草稿
+    function autoSaveDraft(){
+        interval = setInterval(function(){
+            //只有基础信息填写了，才会触发
+            var title = $('input[name=title]').val();
+            var name = $('input[name=name]').val();
+            var des = $('textarea[name=description]').val();
+            if(title != '' || name != '' || des != ''){
+                $('#autoSave').click();
+            }
+        }, 1000*parseInt(<?php echo C('DRAFT_AOTOSAVE_INTERVAL');?>));
+    }
+    autoSaveDraft();<?php endif; ?>
+
+});
+</script>
 
 </body>
 </html>

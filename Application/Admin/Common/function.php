@@ -58,3 +58,31 @@ function get_document_type($type = null){
         default : return    false;  break;
     }
 }
+
+function build_attr_html($attr){
+    $htmlcontent  = '<tr><td ><span class="del_attr">删除</span></td>';
+    $htmlTop = '<tr><th>操作</th>';
+    foreach($attr as $k => $v){
+        $htmlTop .= '<th>'. $v['name'] .'</th>';
+}
+    $htmlTop .= '<th>库存</th><th>价格</th><th>属性图片</th></tr>';
+
+    foreach($attr as $k => $v){
+        $htmlcontent .='<td><select name="attr['. $k .'][]">';
+       foreach($v['child'] as $key => $val){
+            $htmlcontent .= '<option value="'. $val['id'] .'">'. $val['name'] .'</option>';
+        }   
+    }
+    $htmlcontent .='</select></td><td><input type="text" name="attr_goods_num" /></td><td><input type="text" name="attr_goods_price" /></td><td><input type="file" name="attrpic[]"></td></tr>';
+    $html['top'] = $htmlTop;
+    $html['content'] = $htmlcontent;
+    return $html;
+}
+
+function delemptyArray($array){
+    if(count($array)){
+        return true;
+    }else{
+        return false;
+    }
+}

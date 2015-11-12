@@ -104,14 +104,6 @@
                 <input type="text" class="text input-large" name="name" value="<?php echo ((isset($info["name"]) && ($info["name"] !== ""))?($info["name"]):''); ?>">
             </div>
         </div>
-        <div class="form-item">
-            <label class="item-label">属性父级</label>
-            <div class="controls">
-               <select name="pid">
-                    <?php if(is_array($attr)): $i = 0; $__LIST__ = $attr;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$attribute): $mod = ($i % 2 );++$i;?><option value="<?php echo ($attribute["id"]); ?>" <?php if($info[cat_id] == $attribute[id]): ?>selected<?php endif; ?>><?php echo ($attribute["name"]); ?></option><?php endforeach; endif; else: echo "" ;endif; ?>
-                </select>
-            </div>
-        </div>
 
         <div class="form-item cf">
             <button class="btn submit-btn ajax-post hidden" id="submit" type="submit" target-form="form-horizontal">确 定</button>

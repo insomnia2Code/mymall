@@ -123,8 +123,8 @@
                 <div class="form-item">
                     <label class="item-label">商品类型</label>
                     <div class="controls">
-                        <select name="type" id="type">
-                            <volist name="type" id="pro">
+                        <select name="product_id" id="type">
+                            <volist name="Product" id="pro">
                                 <option value="{$pro.id}" <if condition="$pro[id] eq $info[type]">selected</if>>{$pro.name}</option>
                             </volist>
                         </select>
@@ -268,13 +268,14 @@ $(function(){
     //加载属性
     $('#type').change(function(){
 
-        $.post('{:U("Admin/Goods/getAttr")}',{type:$(this).val()},function(data){
+        $.post('{:U("Admin/Goods/getAttr")}',{product_id:$(this).val()},function(data){
             if(data.status){
                 $('#attr_table').append(data.content.top);
                 $('#attr_table').append(data.content.content)
                 $contentTop = data.content.top;
                 $contentCont = data.content.content;
             }else{
+                alert('加载错误');
             }
         })
     });

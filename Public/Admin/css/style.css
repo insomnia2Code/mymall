@@ -670,5 +670,5 @@ body{
 .attr_table td select{ width: 100px;}
 
 #addattr{width: 100px; height: 30px; text-align:center; line-height: 30px; color: #fff; background: #CC3900; display:block; margin-left: 20px; cursor:pointer;}
-
+.del_attr{cursor:pointer;}
 

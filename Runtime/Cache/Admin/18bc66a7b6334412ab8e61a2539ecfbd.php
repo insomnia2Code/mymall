@@ -86,7 +86,7 @@
 
             
     <div class="main-title">
-        <h2><?php if(isset($data)): ?>[ <?php echo ($data["title"]); ?> ] 子<?php endif; ?>菜单管理 </h2>
+        <h2><?php if(isset($data)): ?>[ <?php echo ($data["title"]); ?> ] 子<?php endif; ?>产品管理 </h2>
     </div>
 
     <div class="cf">
@@ -97,8 +97,8 @@
         <!-- 高级搜索 -->
         <div class="search-form fr cf">
             <div class="sleft">
-                <input type="text" name="title" class="search-input" value="<?php echo I('title');?>" placeholder="请输入菜单名称">
-                <a class="sch-btn" href="javascript:;" id="search" url="/mymall/admin.php?s=/Menu/index/pid/0.html"><i class="btn-search"></i></a>
+                <input type="text" name="title" class="search-input" value="<?php echo I('title');?>" placeholder="请输入商品名称">
+                <a class="sch-btn" href="javascript:;" id="search" url="/mymall/admin.php?s=/Order/index.html"><i class="btn-search"></i></a>
             </div>
         </div>
     </div>
@@ -108,44 +108,34 @@
             <table>
                 <thead>
                     <tr>
-                        <th class="row-selected">
+                        <th class="row-selected" width="2%">
                             <input class="checkbox check-all" type="checkbox">
                         </th>
-                        <th>ID</th>
-                        <th>名称</th>
-                        <th>上级菜单</th>
-                        <th>分组</th>
-                        <th>URL</th>
-                        <th>排序</th>
-                        <th>仅开发者模式显示</th>
-                        <th>隐藏</th>
-                        <th>操作</th>
+                        <th width="3%">ID</th>
+                        <th width="15%">订单号</th>
+                        <th width="15%">下单时间</th>
+                        <th width="10%">收货人</th>
+                        <th width="10%">总金额</th>
+                        <th width="10%">应付金额</th>
+                        <th width="25%">订单状态</th>
+                        <th width="10%">操作</th>
                     </tr>
                 </thead>
                 <tbody>
-				<?php if(!empty($list)): if(is_array($list)): $i = 0; $__LIST__ = $list;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$menu): $mod = ($i % 2 );++$i;?><tr>
-                        <td><input class="ids row-selected" type="checkbox" name="id[]" value="<?php echo ($menu["id"]); ?>"></td>
-                        <td><?php echo ($menu["id"]); ?></td>
+				<?php if(!empty($list)): if(is_array($list)): $i = 0; $__LIST__ = $list;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$order): $mod = ($i % 2 );++$i;?><tr>
+                        <td><input class="ids row-selected" type="checkbox" name="id[]" value="<?php echo ($order["order_id"]); ?>"></td>
+                        <td><?php echo ($order["order_id"]); ?></td>
                         <td>
-                            <a href="<?php echo U('index?pid='.$menu['id']);?>"><?php echo ($menu["title"]); ?></a>
+                            <a href="<?php echo U('show?id='.$order['order_id']);?>"><?php echo ($order["order_title"]); ?></a>
                         </td>
-                        <td><?php echo ((isset($menu["up_title"]) && ($menu["up_title"] !== ""))?($menu["up_title"]):'无'); ?></td>
-                        <td><?php echo ($menu["group"]); ?></td>
-                        <td><?php echo ($menu["url"]); ?></td>
-                        <td><?php echo ($menu["listorder"]); ?></td>
+                        <td><?php echo (date('Y-m-d H:i:s',$order["create_time"])); ?></td>
+                        <td><?php echo ($order["contact_name"]); ?></td>
+                        <td><?php echo ($order["order_sum"]); ?></td>
+                        <td><?php echo ($order["order_sum"]); ?></td>
+                        <td></td>
                         <td>
-                            <a href="<?php echo U('toogleDev',array('id'=>$menu['id'],'value'=>abs($menu['is_dev']-1)));?>" class="ajax-get">
-                            <?php echo ($menu["is_dev_text"]); ?>
-                            </a>
-                        </td>
-                        <td>
-                            <a href="<?php echo U('toogleHide',array('id'=>$menu['id'],'value'=>abs($menu['hide']-1)));?>" class="ajax-get">
-                            <?php echo ($menu["hide_text"]); ?>
-                            </a>
-                        </td>
-                        <td>
-                            <a title="编辑" href="<?php echo U('edit?id='.$menu['id']);?>">编辑</a>
-                            <a class="confirm ajax-get" title="删除" href="<?php echo U('del?id='.$menu['id']);?>">删除</a>
+                            <a title="编辑" href="<?php echo U('edit?id='.$order['id']);?>">编辑</a>
+                            <a class="confirm ajax-get" title="删除" href="<?php echo U('del?id='.$order['id']);?>">删除</a>
                         </td>
                     </tr><?php endforeach; endif; else: echo "" ;endif; ?>
 				<?php else: ?>
@@ -155,7 +145,7 @@
         </form>
         <!-- 分页 -->
         <div class="page">
-
+            <?php echo ($page); ?>
         </div>
     </div>
 

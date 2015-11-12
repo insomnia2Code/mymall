@@ -195,8 +195,8 @@
                 <div class="form-item">
                     <label class="item-label">商品类型</label>
                     <div class="controls">
-                        <select name="type" id="type">
-                            <?php if(is_array($type)): $i = 0; $__LIST__ = $type;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$pro): $mod = ($i % 2 );++$i;?><option value="<?php echo ($pro["id"]); ?>" <?php if($pro[id] == $info[type]): ?>selected<?php endif; ?>><?php echo ($pro["name"]); ?></option><?php endforeach; endif; else: echo "" ;endif; ?>
+                        <select name="product_id" id="type">
+                            <?php if(is_array($Product)): $i = 0; $__LIST__ = $Product;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$pro): $mod = ($i % 2 );++$i;?><option value="<?php echo ($pro["id"]); ?>" <?php if($pro[id] == $info[type]): ?>selected<?php endif; ?>><?php echo ($pro["name"]); ?></option><?php endforeach; endif; else: echo "" ;endif; ?>
                         </select>
                     </div>
                 </div>
@@ -429,13 +429,14 @@ $(function(){
     //加载属性
     $('#type').change(function(){
 
-        $.post('<?php echo U("Admin/Goods/getAttr");?>',{type:$(this).val()},function(data){
+        $.post('<?php echo U("Admin/Goods/getAttr");?>',{product_id:$(this).val()},function(data){
             if(data.status){
                 $('#attr_table').append(data.content.top);
                 $('#attr_table').append(data.content.content)
                 $contentTop = data.content.top;
                 $contentCont = data.content.content;
             }else{
+                alert('加载错误');
             }
         })
     });
